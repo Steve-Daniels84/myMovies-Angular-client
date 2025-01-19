@@ -13,7 +13,7 @@ const apiUrl = 'https://mymovies-api-d8738180d851.herokuapp.com/';
 @Injectable({
   providedIn: 'root',
 })
-export class UserRegistrationService {
+export class fetchApiDataService {
   constructor(private http: HttpClient) {}
 
   //Handle errors
