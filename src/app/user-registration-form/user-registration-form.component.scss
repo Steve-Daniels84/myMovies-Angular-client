@@ -1,8 +1,20 @@
-.card-header {
-    width: 100%;
+
+mat-card-header {
     font-weight: bold;
     text-align: center;
     justify-content: center;
-    border: 1px solid black;
+    margin-bottom: 12px;
 }   
 
+mat-form-field {
+    width: 100%;
+}
+
+button {
+    width: 100%;
+}
+
+mat-card-actions {
+    justify-content: center;
+    width: 100%;
+}
