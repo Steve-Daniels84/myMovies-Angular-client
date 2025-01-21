@@ -1,5 +1,5 @@
+import { UserRegistrationFormComponent } from '../user-registration-form/user-registration-form.component';
 import { Component, Inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,27 +8,28 @@ import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dial
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
-  selector: 'app-root',
+  selector: 'app-login-registration',
   standalone: true,
   imports: [
-    RouterOutlet,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatDialogModule,
     MatSnackBarModule,
-    FormsModule
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    FormsModule],
+  templateUrl: './login-registration.component.html',
+  styleUrl: './login-registration.component.scss'
 })
-export class AppComponent {
-  title = 'myMovies-Angular-client';
+export class LoginRegistrationComponent {
 
   constructor(@Inject(MatDialog) public dialog: MatDialog) { }
-// This is the function that will open the dialog when the signup button is clicked  
-
+  
+openUserRegistrationDialog(): void {
+  this.dialog.open(UserRegistrationFormComponent, {
+// Assigning the dialog a width
+  width: '280px'
+  });
+}
 }
