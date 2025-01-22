@@ -1,0 +1,8 @@
+<div class="movie-card-grid">
+<mat-card *ngFor="let movie of movies; let i = index" class="grid-card" (click)="openDetailsDialog(movie)">
+  <mat-dialog-content>
+    <mat-card-title>{{ movie.Title }}</mat-card-title>
+    <mat-card-subtitle><img class="card-image" src="{{ movie.ImagePath }}" /></mat-card-subtitle>
+  </mat-dialog-content>
+</mat-card>
+</div>

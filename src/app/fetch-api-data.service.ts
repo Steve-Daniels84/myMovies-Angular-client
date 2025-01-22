@@ -7,44 +7,56 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth-service.service';  // Import AuthService
 
-//Declaring the api url that will provide data for the client app
 const apiUrl = 'https://mymovies-api-d8738180d851.herokuapp.com/';
+
 @Injectable({
   providedIn: 'root',
 })
 export class fetchApiDataService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  //Handle errors
+  /// Handle errors
   private handleError(error: HttpErrorResponse): Observable<never> {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
+    // Check if it's a client-side error (network issue, etc.)
+    if (error.error instanceof Error) {
+      console.error('A client-side or network error occurred:', error.error.message);
     } else {
-      // The backend returned an unsuccessful response code.
+      // Handle server-side errors (HTTP response status >= 400)
       console.error(
-        `Backend returned code ${error.status}, ` + `body was: ${error.error}`
+        `Backend returned code ${error.status}, body was: ${error.error}`
       );
     }
-    // Return an observable with a user-facing error message
-    return throwError('Something went wrong. Please try again later.');
+
+    // Return a user-friendly error message and throw it as an observable
+    let errorMessage = 'Something went wrong. Please try again later.';
+    
+    // Optionally, customize the error message based on status code or other factors
+    if (error.status === 404) {
+      errorMessage = 'Requested resource not found.';
+    } else if (error.status === 500) {
+      errorMessage = 'Server error, please try again later.';
+    }
+    
+    // Use the updated syntax for throwing an error observable
+    return throwError(() => new Error(errorMessage));  // Throws a new error object
   }
 
-  //User registration
+  // User registration
   public userRegistration(userDetails: any): Observable<any> {
     return this.http
       .post(apiUrl + 'users', userDetails)
       .pipe(catchError(this.handleError));
   }
 
-  //User login
+  // User login
   public userLogin(userDetails: any): Observable<any> {
     return this.http.post(apiUrl + 'login', userDetails).pipe(
       map((response: any) => {
         if (response && response.token) {
-          // Store the token in local storage
-          localStorage.setItem('token', response.token);
+          // Store the token via AuthService
+          this.authService.setToken(response.token);  // Using AuthService for token management
         }
         return response;
       }),
@@ -52,9 +64,10 @@ export class fetchApiDataService {
     );
   }
 
-  //Get all movies
+  // Get all movies
   public getAllMovies(): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
+    
     return this.http
       .get(apiUrl + 'movies', {
         headers: new HttpHeaders({
@@ -64,9 +77,9 @@ export class fetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  //Get a movie by title
+  // Get a movie by title
   public getMovieByTitle(title: String): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .get(apiUrl + `movies/${title}`, {
         headers: new HttpHeaders({
@@ -76,9 +89,9 @@ export class fetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  //Update movie Genre
+  // Update movie Genre
   public updateMovieGenre(title: String, genre: String): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .put(
         apiUrl + `movies/${title}`,
@@ -92,9 +105,9 @@ export class fetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  //Add new movie
+  // Add new movie
   public addMovie(movieDetails: any): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .post(apiUrl + 'movies', movieDetails, {
         headers: new HttpHeaders({
@@ -104,9 +117,9 @@ export class fetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  //Delete movie by ID
+  // Delete movie by ID
   public deleteMovie(title: String): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .delete(apiUrl + `movies/${title}`, {
         headers: new HttpHeaders({
@@ -116,9 +129,9 @@ export class fetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  //Get all users
+  // Get all users
   public getAllUsers(): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .get(apiUrl + 'users', {
         headers: new HttpHeaders({
@@ -128,9 +141,9 @@ export class fetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  //Get user by ID
+  // Get user by ID
   public getUserById(username: String): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .get(apiUrl + `users/${username}`, {
         headers: new HttpHeaders({
@@ -140,12 +153,12 @@ export class fetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  //Update user details
+  // Update user details
   public updateUserDetails(
     username: String,
     userDetails: any
   ): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .put(apiUrl + `users/${username}`, userDetails, {
         headers: new HttpHeaders({
@@ -155,9 +168,9 @@ export class fetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  //Add favourite movie to user
+  // Add favourite movie to user
   public addFavouriteMovie(username: String, movieId: String): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .post(
         apiUrl + `users/${username}/movies/${movieId}`,
@@ -171,12 +184,12 @@ export class fetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  //Remove favourite movie from user
+  // Remove favourite movie from user
   public removeFavouriteMovie(
     username: String,
     movieId: String
   ): Observable<any> {
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .delete(apiUrl + `users/${username}/movies/${movieId}`, {
         headers: new HttpHeaders({

@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth-service.service';
 
 @Component({
   selector: 'app-login-form',
@@ -32,7 +33,8 @@ export class LoginFormComponent implements OnInit {
     public fetchApiData: fetchApiDataService,
     public dialogRef: MatDialogRef<LoginFormComponent> | null,
     public snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {}
@@ -40,11 +42,9 @@ export class LoginFormComponent implements OnInit {
   logUserIn(): void {
     this.fetchApiData.userLogin(this.userData).subscribe({
       next: (result) => {
-        localStorage.setItem('user', result.Username);
-        localStorage.setItem('token', result.token);
 
-        // Logic for a successful user registration
-        this.dialogRef?.close(); // Close the modal on success
+        this.authService.setToken(result.token);
+        this.dialogRef?.close(); 
         this.snackBar.open('User logged in successfullly!', 'OK', {
           duration: 2000,
         });
