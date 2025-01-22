@@ -29,6 +29,4 @@ export class AppComponent {
   title = 'myMovies-Angular-client';
 
   constructor(@Inject(MatDialog) public dialog: MatDialog) { }
-// This is the function that will open the dialog when the signup button is clicked  
-
 }

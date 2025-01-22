@@ -1,4 +1,5 @@
 import { UserRegistrationFormComponent } from '../user-registration-form/user-registration-form.component';
+import { LoginFormComponent } from '../login-form/login-form.component';
 import { Component, Inject } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,4 +33,12 @@ openUserRegistrationDialog(): void {
   width: '280px'
   });
 }
+
+openLoginDialog(): void {
+  this.dialog.open(LoginFormComponent, {
+// Assigning the dialog a width
+  width: '280px'
+  });
+}
+
 }
