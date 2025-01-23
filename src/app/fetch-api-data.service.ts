@@ -169,12 +169,12 @@ export class fetchApiDataService {
   }
 
   // Add favourite movie to user
-  public addFavouriteMovie(username: String, movieId: String): Observable<any> {
+  public addFavouriteMovie(userId: String, movieId: String): Observable<any> {
     const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .post(
-        apiUrl + `users/${username}/movies/${movieId}`,
-        {},
+        apiUrl + `users/${userId}/${movieId}`,
+        null,
         {
           headers: new HttpHeaders({
             Authorization: 'Bearer ' + token,
@@ -186,12 +186,12 @@ export class fetchApiDataService {
 
   // Remove favourite movie from user
   public removeFavouriteMovie(
-    username: String,
+    userId: String,
     movieId: String
   ): Observable<any> {
     const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
-      .delete(apiUrl + `users/${username}/movies/${movieId}`, {
+      .delete(apiUrl + `users/${userId}/${movieId}`, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),

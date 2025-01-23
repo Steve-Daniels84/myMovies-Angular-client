@@ -1,0 +1,8 @@
+{
+    "/api": {
+      "target": "https://mymovies-api-d8738180d851.herokuapp.com/",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }

@@ -35,4 +35,62 @@ export class AuthService {
       localStorage.removeItem('token');
     }
   }
+
+  //Add Favourites to localStorage
+  setFavouriteMovies(favourites: any): void {
+    if (this.isBrowser) {
+      localStorage.setItem('favourites', JSON.stringify(favourites));
+    }
+  }
+
+  //Remove Favourites from localStorage
+  removeFavouriteMovies(): void {
+    if (this.isBrowser) {
+      localStorage.removeItem('favourites');
+    }
+  }
+
+  //Set username to localStorage
+  setUsername(username: string): void {
+    if (this.isBrowser) {
+      localStorage.setItem('username', username);
+    }
+  }
+
+  //Get username from localStorage
+  getUsername(): string | null {
+    if (this.isBrowser) {
+      return localStorage.getItem('username');
+    }
+    return null;
+  }
+
+  //Remove username from localStorage
+  removeUsername(): void {
+    if (this.isBrowser) {
+      localStorage.removeItem('username');
+    }
+  }
+
+  //Add user ID to localStorage
+  setUserID(userID: string): void {
+    if (this.isBrowser) {
+      localStorage.setItem('userID', userID);
+    }
+  }
+
+  //Remove user ID from localStorage
+  removeUserID(): void {
+    if (this.isBrowser) {
+      localStorage.removeItem('userID');
+    }
+  }
+
+  //Get user ID from localStorage
+  getUserID(): string | null {
+    if (this.isBrowser) {
+      return localStorage.getItem('userID');
+    }
+    return null;
+  }
 }

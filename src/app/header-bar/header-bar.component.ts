@@ -20,6 +20,8 @@ export class HeaderBarComponent {
 constructor(private authService: AuthService, public router:Router) { }
   logout() {
     this.authService.removeToken();
+    this.authService.removeFavouriteMovies();
+    this.authService.removeUserID();
     this.router.navigate(['']);
   }
 }

@@ -1,1 +1,31 @@
-<p>{{data.Title}}</p>
+<div class="card">
+  <div class="detail-card-title">
+    <div>
+      <h1>{{ data.Title }}</h1>
+      <h3>{{ data.Genre.Name }}</h3>
+    </div>
+<div  class="favourite-button-container" >
+  <mat-icon [ngClass]="{ 'favourite': isFavourite}" class="favourite-button" (click)="setUnsetFavourite()">star</mat-icon>
+</div>
+  </div>
+
+  <div class="detail-card-poster">
+    <img class="card-image" src="{{ data.ImagePath }}" />
+  </div>
+  <div class="detail-card-description">
+    <p>{{ data.Description }}</p>
+  </div>
+
+  <div class="detail-card-director">
+    <img [src]="data.Director.HeadShots[0]" />
+    <div class="director-info">
+      <h2 class="director-name">{{ data.Director.Name }}</h2>
+      <h3>Director</h3>
+      <p>{{ data.Director.Bio }}</p>
+    </div>
+  </div>
+  <div class="detail-card-genre">
+    <h4>A little about the genre..</h4>
+    <p>{{ data.Genre.Description }}</p>
+  </div>
+</div>

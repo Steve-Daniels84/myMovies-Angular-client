@@ -1,0 +1,62 @@
+.card {
+padding: 10px
+}
+
+.detail-card-title {
+    padding: 5px;
+    display: flex  ;
+    justify-content: space-between;
+}
+
+.favourite-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.favourite-button {
+    border: none;
+    cursor: pointer;
+    scale: 2;  
+}
+
+.detail-card-poster {
+    height: auto; /* Let the height adjust automatically to preserve aspect ratio */
+    object-fit: contain;
+}
+
+.detail-card-poster img {
+    width: 50%; /* Shrink the image size */
+    height: auto; /* Maintain the aspect ratio */
+    object-fit: contain; /* Ensures the image fits within the given dimensions */
+    display: block; /* Optional: Prevents inline spacing issues */
+    margin: 0 auto; /* Optional: Centers the image */
+}
+
+.detail-card-description {
+    padding: 10px;
+}
+
+.detail-card-director {
+    width: auto;
+    display: flex;
+    padding: 10px;
+}
+
+.detail-card-director img {
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+}
+
+.director-info {
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.detail-card-genre {
+    padding: 10px;
+}

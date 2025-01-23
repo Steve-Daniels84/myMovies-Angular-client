@@ -34,14 +34,14 @@ export class MovieCardComponent {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
-      console.log(this.movies);
       return this.movies;
     });
   }
 
-  openDetailsDialog(movie: any): void {
+  openDetailsDialog(movie: object): void {
     this.dialog.open(MovieDalogComponent, {
       data: movie,
+      width: '900px'
     });
   }
 
