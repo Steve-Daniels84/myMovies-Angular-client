@@ -10,8 +10,8 @@
   >
     <mat-icon id="account-menu">account_circle</mat-icon>
   </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+  <mat-menu #menu="matMenu" >
+    <button mat-menu-item (click)="openUserProfileDialog(this.user)">
       <mat-icon>account_circle</mat-icon>
       <span>Profile</span>
     </button>
