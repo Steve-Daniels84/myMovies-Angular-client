@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   //Add Favourites to localStorage
-  setFavouriteMovies(favourites: any): void {
+  setFavouriteMovies(favourites: Array<string>): void {
     if (this.isBrowser) {
       localStorage.setItem('favourites', JSON.stringify(favourites));
     }

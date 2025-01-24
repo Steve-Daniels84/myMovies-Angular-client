@@ -44,7 +44,7 @@ export class LoginFormComponent implements OnInit {
       next: (result) => {
 
         this.authService.setToken(result.token);
-        this.authService.setFavouriteMovies(result.FavoriteMovies? result.FavoriteMovies : []);
+        this.authService.setFavouriteMovies(result.FavouriteMovies);
         this.authService.setUserID(result.userId);
         this.dialogRef?.close(); 
         this.snackBar.open('User logged in successfullly!', 'OK', {

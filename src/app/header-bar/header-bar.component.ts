@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
 import { AuthService } from '../auth-service.service';
 import { RouterModule, Router } from '@angular/router';
 @Component({
@@ -10,8 +11,8 @@ import { RouterModule, Router } from '@angular/router';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    RouterModule
-    
+    RouterModule,
+    MatMenuModule
   ],
   templateUrl: './header-bar.component.html',
   styleUrl: './header-bar.component.scss'

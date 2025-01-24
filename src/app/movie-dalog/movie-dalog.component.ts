@@ -34,11 +34,6 @@ export class MovieDalogComponent {
     return favorites ? JSON.parse(favorites) : [];
   }
 
-  // Updates favorite movies in local storage
-  updateFavouriteMoviesInLocalStorage(favorites: string[]): void {
-    localStorage.setItem('favourites', JSON.stringify(favorites));
-  }
-
   // Add or remove a movie from favorites
   setUnsetFavourite(): void {
     // Retrieve current favorites
@@ -46,41 +41,26 @@ export class MovieDalogComponent {
 
     if (this.isFavourite) {
       // Remove from favorites
-      favorites = favorites.filter((id) => id !== this.data._id);
       if (this.userId) {
         this.fetchApiData
-          .removeFavouriteMovie(this.userId, this.data._id)
-          .subscribe((resp) => {
-            console.log(resp);
+          .removeFavouriteMovie(this.userId, this.data._id) //Update user favourite on db
+          .subscribe(() => {
+            favorites = favorites.filter((id) => id !== this.data._id); //Remove movie from favorites variable
+            this.authService.setFavouriteMovies(favorites); //Update local storage
+            this.isFavourite = !this.isFavourite; //Toggle isFavourite
           });
-      } else {
-        console.error('Username is null');
       }
     } else {
       // Add to favorites
       if (this.userId) {
-        console.log(this.userId);
         this.fetchApiData
-          .addFavouriteMovie(this.userId, this.data._id)
-          .subscribe({
-            next: (resp) => {
-            favorites.push(this.data._id);
-            console.log(resp);
-          },
-          error: (error) => {
-            console.error(error);
-          }
-        });
-        
+          .addFavouriteMovie(this.userId, this.data._id) //Update user favourite on db
+          .subscribe((event) => {
+            favorites.push(this.data._id); //Add movie to favorites variable
+            this.authService.setFavouriteMovies(favorites); //Update local storage
+            this.isFavourite = !this.isFavourite; //Toggle isFavourite
+          });
       }
-
-      // Update local storage
-      this.updateFavouriteMoviesInLocalStorage(favorites);
-
-      // Toggle isFavourite
-      this.isFavourite = !this.isFavourite;
-
-      console.log(`Favorites updated: ${favorites}`);
     }
   }
 }

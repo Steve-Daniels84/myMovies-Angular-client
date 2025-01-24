@@ -19,28 +19,8 @@ export class fetchApiDataService {
 
   /// Handle errors
   private handleError(error: HttpErrorResponse): Observable<never> {
-    // Check if it's a client-side error (network issue, etc.)
-    if (error.error instanceof Error) {
-      console.error('A client-side or network error occurred:', error.error.message);
-    } else {
-      // Handle server-side errors (HTTP response status >= 400)
-      console.error(
-        `Backend returned code ${error.status}, body was: ${error.error}`
-      );
-    }
-
-    // Return a user-friendly error message and throw it as an observable
-    let errorMessage = 'Something went wrong. Please try again later.';
-    
-    // Optionally, customize the error message based on status code or other factors
-    if (error.status === 404) {
-      errorMessage = 'Requested resource not found.';
-    } else if (error.status === 500) {
-      errorMessage = 'Server error, please try again later.';
-    }
-    
-    // Use the updated syntax for throwing an error observable
-    return throwError(() => new Error(errorMessage));  // Throws a new error object
+    console.error('Error:', error);
+    return throwError(() => new Error(error.error));  // Throws a new error object
   }
 
   // User registration
@@ -172,10 +152,11 @@ export class fetchApiDataService {
   public addFavouriteMovie(userId: String, movieId: String): Observable<any> {
     const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
-      .post(
+      .put(
         apiUrl + `users/${userId}/${movieId}`,
         null,
         {
+          responseType: 'text',
           headers: new HttpHeaders({
             Authorization: 'Bearer ' + token,
           }),
@@ -191,7 +172,8 @@ export class fetchApiDataService {
   ): Observable<any> {
     const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
-      .delete(apiUrl + `users/${userId}/${movieId}`, {
+      .delete(apiUrl + `users/${userId}/${movieId}`,  {
+        responseType: 'text',
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
