@@ -42,16 +42,14 @@ constructor(private authService: AuthService, public router:Router, public dialo
   openUserProfileDialog(user: object): void {
     this.dialog.open(UserProfileComponent, {
       data:  this.user ,
-      width: '280px'
     });
-    console.log('User profile dialog opened');
   }
 
   ngOnInit(): void {
     this.user = this.userId = this.authService.getUserID();
     if (this.userId) {
       this.apiData.getUserById(this.userId).subscribe((resp: any) => {
-        console.log(resp);
+        this.user = resp[0];
       });
     }
   }

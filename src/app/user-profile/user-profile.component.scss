@@ -14,16 +14,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .profile-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
+    margin-bottom: 20px;
 }
 
 .profile-footer {
     display: flex;
     justify-content: space-between;
+}
+
+.profile-content-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profile-content-item label {
+    margin-right: 10px;
 }

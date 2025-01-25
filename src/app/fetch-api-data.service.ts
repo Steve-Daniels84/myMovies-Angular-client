@@ -141,6 +141,7 @@ export class fetchApiDataService {
     const token = this.authService.getToken();  // Fetch token from AuthService
     return this.http
       .put(apiUrl + `users/${username}`, userDetails, {
+        responseType: 'text',
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),

@@ -1,13 +1,55 @@
-<div class="profile-card">
-  <div class="profile-header">
-    <p>{{data}}</p>
-  </div>
-  <div class="profile-content">
-    <p>Profile Content</p>
-  </div>
-  <div class="profile-footer">
-<button>
-    Edit
-</button>  
-</div>
-</div>
+<mat-card class="profile-card" *ngIf="!edit">
+  <mat-card-header>
+    <mat-card-title>Profile</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="profile-content-item">
+      <label for="username"><strong>Username:</strong></label>
+      <p id="username">{{ data.Username }}</p>
+    </div>
+    <div class="profile-content-item">
+      <label for="email"><strong>Email:</strong></label>
+      <p id="email">{{ data.Email }}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="toggleEditMode()">Edit</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="profile-card" *ngIf="edit">
+  <mat-card-header>
+    <mat-card-title>Edit Your Profile</mat-card-title>
+    <mat-card-subtitle>Amend your username or email and press save.</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form>
+      <mat-form-field appearance="fill" class="profile-content-item">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          [(ngModel)]="userData.Username"
+          type="text"
+          placeholder="Enter your username"
+          name="Username"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="profile-content-item">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          [(ngModel)]="userData.Email"
+          type="email"
+          placeholder="Enter your email"
+          name="Email"
+          required
+        />
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="saveChanges()">Save</button>
+    <button mat-stroked-button color="warn" (click)="toggleEditMode()">Cancel</button>
+  </mat-card-actions>
+</mat-card>
