@@ -35,7 +35,19 @@ export class UserProfileComponent {
   }
 
   saveChanges() {
-    this.fetchApiData.updateUserDetails(this.data._id, this.userData).subscribe((response) => {(response: any) => {console.log(response);}});
-    this.toggleEditMode();
+    this.fetchApiData.updateUserDetails(this.data._id, this.userData).subscribe({
+    next:  (response) => {
+      this.snackBar.open('Profile updated successfully!', 'OK', {
+        duration: 2000,
+      });
+      this.toggleEditMode();
+    },
+    error: (response) => {
+      this.snackBar.open(response, 'an error occurred', {
+        duration: 2000,
+      });
+    }
+    });
+  
   }
 }
